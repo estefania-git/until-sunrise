@@ -14,11 +14,6 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require("connect-flash");
 
 
-const {
-  OAuth2Client
-} = require('google-auth-library');
-
-
 mongoose
   .connect('mongodb://localhost/p2', {
     useNewUrlParser: true
@@ -81,7 +76,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 //   saveUninitialized: true,
 //   store: new MongoStore( { mongooseConnection: mongoose.connection })
 // }))
-// app.use(flash());
+app.use(flash());
 // require('./passport')(app);
 
 
