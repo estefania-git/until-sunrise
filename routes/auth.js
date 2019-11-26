@@ -11,8 +11,7 @@ passport.use(
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: "/auth/google/callback"
     },
-    (accessToken, refreshToken, profile, done) => {
-
+    (accessToken, refreshToken, profile, done) => { 
       User.findOne({ googleID: profile.id })
         .then(user => {
           if (user) {
@@ -68,5 +67,7 @@ router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+
+router.get("/")
 
 module.exports = router;
