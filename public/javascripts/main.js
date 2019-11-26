@@ -1,6 +1,6 @@
-// maps 
-// const directionsService = new google.maps.DirectionsService;
-// const directionsDisplay = new google.maps.DirectionsRenderer;
+// maps
+const directionsService = new google.maps.DirectionsService();
+const directionsDisplay = new google.maps.DirectionsRenderer();
 
 // const directionRequest = {
 //   origin: {
@@ -26,7 +26,6 @@
 // );
 
 // directionsDisplay.setMap(theMap);
-
 
 function randomFloat(min, max) {
   return Math.random() * (max - min) + min;
@@ -65,7 +64,7 @@ function startMap() {
   //   }
   // );
   locateMe(theMap);
-  interactWithTheMap(theMap);
+  // interactWithTheMap(theMap);
   infoWindowDisplay(theMap);
   //addMarkerWhereYouHaveClicked(theMap);
   markersWithEvents(theMap);
@@ -76,12 +75,13 @@ function startMap() {
 function drawRoute(theMap, origin, destination) {
   // Create a new directionsService object.
   var directionsService = new google.maps.DirectionsService();
-  directionsService.route({
+  directionsService.route(
+    {
       origin: origin.latitude + "," + origin.longitude,
       destination: destination.latitude + "," + destination.longitude,
       travelMode: "DRIVING"
     },
-    function (response, status) {
+    function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
         new google.maps.DirectionsRenderer({
           suppressMarkers: true,
@@ -98,7 +98,7 @@ function locateMe(theMap) {
     // Get current position
     // The permissions dialog will pop up
     navigator.geolocation.getCurrentPosition(
-      function (position) {
+      function(position) {
         // Create an object to match Google's Lat-Lng object format
         const currentCoords = {
           lat: position.coords.latitude,
@@ -116,7 +116,7 @@ function locateMe(theMap) {
         // User granted permission
         // Center the map in the position we got
       },
-      function () {
+      function() {
         // If something goes wrong
         console.log("Error in the geolocation service.");
       }
@@ -131,18 +131,18 @@ function interactWithTheMap(theMap) {
   let asideDOMEl = document.querySelector("aside");
   let zurdo = false;
 
-  asideDOMEl.innerHTML = `<p>Zurdo ${zurdo}</p><input type='range' min=1 max=15 id='zoom-level' placeholder='zoom level' /><button id="move-left">Move left</button><button id="move-right">Move right</button>`;
-  asideDOMEl.style.left = 0;
+  // asideDOMEl.innerHTML = `<p>Zurdo ${zurdo}</p><input type='range' min=1 max=15 id='zoom-level' placeholder='zoom level' /><button id="move-left">Move left</button><button id="move-right">Move right</button>`;
+  // asideDOMEl.style.left = 0;
 
-  document.querySelector("#move-left").onclick = function () {
+  document.querySelector("#move-left").onclick = function() {
     theMap.panBy(500 * (zurdo ? -1 : 1), 0);
   };
 
-  document.querySelector("#move-right").onclick = function () {
+  document.querySelector("#move-right").onclick = function() {
     theMap.panBy(-500 * (zurdo ? -1 : 1), 0);
   };
 
-  document.querySelector("#zoom-level").onchange = function () {
+  document.querySelector("#zoom-level").onchange = function() {
     theMap.setZoom(+this.value);
   };
 }
@@ -180,13 +180,13 @@ function infoWindowDisplay(theMap) {
     title: "Uluru (Ayers Rock)"
   });
 
-  marker.addListener("click", function () {
+  marker.addListener("click", function() {
     infowindow.open(map, marker);
   });
 }
 
 function addMarkerWhereYouHaveClicked(theMap) {
-  theMap.addListener("click", function (e) {
+  theMap.addListener("click", function(e) {
     markers.push(
       new google.maps.Marker({
         position: e.latLng,
@@ -203,10 +203,12 @@ function addMarkerWhereYouHaveClicked(theMap) {
 
     if (markers.length === 2) {
       drawRoute(
-        theMap, {
+        theMap,
+        {
           latitude: markers[0].position.lat(),
           longitude: markers[0].position.lng()
-        }, {
+        },
+        {
           latitude: markers[1].position.lat(),
           longitude: markers[1].position.lng()
         }
@@ -229,7 +231,7 @@ function markersWithEvents(theMap) {
 
     asideDOMEl.style.left = 0;
 
-    document.querySelector("#close-button").onclick = function () {
+    document.querySelector("#close-button").onclick = function() {
       document.querySelector("aside").style.left = "-30vw";
     };
   }
@@ -280,5 +282,43 @@ function showAirports(theMap) {
     });
   });
 }
+
+google.maps.event.addDomListener(window, "load", function() {
+  const ubicacion = new Location(() => {
+    const myLatLng = { lat: ubicacion.latitude, lng: ubicacion.longitude };
+
+    let texto =
+      "<h1> Nombre del lugar </h1>" +
+      "<p> Descripcion del lugar <p>" +
+      '<a href="https://www.google.com">Pagina web</a>';
+
+    const options = {
+      center: myLatLng,
+      zoom: 14
+    };
+
+    //     // let map = document.getElementById("map");
+
+    //     // const mapa = new google.maps.Map(map, options);
+
+    //     const marcador = new google.maps.marker({
+    //       position: myLatLng,
+    //       map: theMap,
+    //       title: "Mi primer marcador "
+    //     });
+
+    let informacion = new google.maps.InfoWindow({
+      content: texto
+    });
+    marcador.addListener("click", function() {
+      informacion.open(theMap, marcador);
+    });
+
+    let autocomplete = document.getElementById("autocomplete");
+
+    const search = new google.maps.places.Autocomplete(autocomplete);
+    search.bindTo("bounds", theMap);
+  });
+});
 
 startMap();
