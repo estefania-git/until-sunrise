@@ -5,14 +5,15 @@ const User = require("../models/User");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
 passport.use(
-  new GoogleStrategy(
-    {
+  new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: "/auth/google/callback"
     },
-    (accessToken, refreshToken, profile, done) => { 
-      User.findOne({ googleID: profile.id })
+    (accessToken, refreshToken, profile, done) => {
+      User.findOne({
+          googleID: profile.id
+        })
         .then(user => {
           if (user) {
             done(null, user);
@@ -31,7 +32,7 @@ passport.use(
             locale: profile.locale,
             refresh_token: refreshToken
           }
-          
+
           User.create(newUser)
             .then(newUser => {
               done(null, newUser);
@@ -60,7 +61,9 @@ router.get(
 );
 
 router.get("/login", (req, res, next) => {
-  res.render("auth/login", { "message": req.flash("error") });
+  res.render("auth/login", {
+    "message": req.flash("error")
+  });
 });
 
 router.get("/logout", (req, res) => {
@@ -69,5 +72,10 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/")
+
+
+router.get('/', (req, res, next) => {
+  res.render('map');
+});
 
 module.exports = router;
