@@ -1,104 +1,121 @@
-// maps
-const directionsService = new google.maps.DirectionsService();
-const directionsDisplay = new google.maps.DirectionsRenderer();
-
-// const directionRequest = {
-//   origin: {
-//     lat: 41.3977381,
-//     lng: 2.190471916
-//   },
-//   destination: 'Madrid, ES',
-//   travelMode: 'DRIVING'
-// };
-
-// directionsService.route(
-//   directionRequest,
-//   function (response, status) {
-//     if (status === 'OK') {
-//       // everything is ok
-//       directionsDisplay.setDirections(response);
-
-//     } else {
-//       // something went wrong
-//       window.alert('Directions request failed due to ' + status);
-//     }
-//   }
-// );
-
-// directionsDisplay.setMap(theMap);
-
-function randomFloat(min, max) {
-  return Math.random() * (max - min) + min;
-}
-
-let ironhackBCNData = {
-  name: "Ironhack BCN",
-  students: 222,
-  bootcamps: 5
-};
-
-let uluru = {
-  lat: -25.363,
-  lng: 131.044
-};
-let barcelona = {
-  lat: 41.39780037511012,
-  lng: 2.1905911449111493
-};
-let theMap;
-let markers = [];
-
-function startMap() {
-  theMap = new google.maps.Map(document.getElementById("map"), {
-    zoom: 14,
-    center: barcelona
+function initMap() {
+  var map = new google.maps.Map(document.getElementById("map"), {
+    mapTypeControl: false,
+    center: { lat: 41.3977381, lng: 2.190471916 },
+    zoom: 13
   });
 
-  // drawRoute(
-  //   theMap, {
-  //     latitude: 41.39780037511012,
-  //     longitude: 2.1905911449111493
-  //   }, {
-  //     latitude: 41.7,
-  //     longitude: 2.3
-  //   }
-  // );
-  locateMe(theMap);
-  // interactWithTheMap(theMap);
-  infoWindowDisplay(theMap);
-  //addMarkerWhereYouHaveClicked(theMap);
-  markersWithEvents(theMap);
-  showAirports(theMap);
-  displayMarkersRow(theMap);
+  new AutocompleteDirectionsHandler(map);
+  locateMe(map);
 }
 
-function drawRoute(theMap, origin, destination) {
-  // Create a new directionsService object.
-  var directionsService = new google.maps.DirectionsService();
-  directionsService.route(
+/**
+ * @constructor
+ */
+function AutocompleteDirectionsHandler(map) {
+  this.map = map;
+  this.originPlaceId = null;
+  this.destinationPlaceId = null;
+  this.travelMode = "WALKING";
+  this.directionsService = new google.maps.DirectionsService();
+  this.directionsRenderer = new google.maps.DirectionsRenderer();
+  this.directionsRenderer.setMap(map);
+
+  var originInput = document.getElementById("origin-input");
+  var destinationInput = document.getElementById("destination-input");
+  var modeSelector = document.getElementById("mode-selector");
+
+  var originAutocomplete = new google.maps.places.Autocomplete(originInput);
+  // Specify just the place data fields that you need.
+  originAutocomplete.setFields(["place_id"]);
+
+  var destinationAutocomplete = new google.maps.places.Autocomplete(
+    destinationInput
+  );
+  // Specify just the place data fields that you need.
+  destinationAutocomplete.setFields(["place_id"]);
+
+  this.setupClickListener("changemode-walking", "WALKING");
+  this.setupClickListener("changemode-transit", "TRANSIT");
+  this.setupClickListener("changemode-driving", "DRIVING");
+
+  this.setupPlaceChangedListener(originAutocomplete, "ORIG");
+  this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
+
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(
+    destinationInput
+  );
+  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+}
+
+// Sets a listener on a radio button to change the filter type on Places
+// Autocomplete.
+AutocompleteDirectionsHandler.prototype.setupClickListener = function(
+  id,
+  mode
+) {
+  var radioButton = document.getElementById(id);
+  var me = this;
+
+  radioButton.addEventListener("click", function() {
+    me.travelMode = mode;
+    me.route();
+  });
+};
+
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(
+  autocomplete,
+  mode
+) {
+  var me = this;
+  autocomplete.bindTo("bounds", this.map);
+
+  autocomplete.addListener("place_changed", function() {
+    var place = autocomplete.getPlace();
+
+    if (!place.place_id) {
+      window.alert("Please select an option from the dropdown list.");
+      return;
+    }
+    if (mode === "ORIG") {
+      me.originPlaceId = place.place_id;
+    } else {
+      me.destinationPlaceId = place.place_id;
+    }
+    me.route();
+  });
+};
+
+AutocompleteDirectionsHandler.prototype.route = function() {
+  if (!this.originPlaceId || !this.destinationPlaceId) {
+    return;
+  }
+  var me = this;
+
+  this.directionsService.route(
     {
-      origin: origin.latitude + "," + origin.longitude,
-      destination: destination.latitude + "," + destination.longitude,
-      travelMode: "DRIVING"
+      origin: { placeId: this.originPlaceId },
+      destination: { placeId: this.destinationPlaceId },
+      travelMode: this.travelMode
     },
     function(response, status) {
-      if (status === google.maps.DirectionsStatus.OK) {
-        new google.maps.DirectionsRenderer({
-          suppressMarkers: true,
-          map: theMap,
-          directions: response
-        });
+      if (status === "OK") {
+        me.directionsRenderer.setDirections(response);
+      } else {
+        window.alert("Directions request failed due to " + status);
       }
     }
   );
-}
+};
 
-function locateMe(theMap) {
+function locateMe(map) {
   if (navigator.geolocation) {
     // Get current position
     // The permissions dialog will pop up
     navigator.geolocation.getCurrentPosition(
       function(position) {
+        debugger;
         // Create an object to match Google's Lat-Lng object format
         const currentCoords = {
           lat: position.coords.latitude,
@@ -107,11 +124,11 @@ function locateMe(theMap) {
 
         new google.maps.Marker({
           position: currentCoords,
-          map: theMap,
+          map: map,
           title: "I am here"
         });
 
-        theMap.panTo(currentCoords);
+        map.panTo(currentCoords);
 
         // User granted permission
         // Center the map in the position we got
@@ -127,198 +144,4 @@ function locateMe(theMap) {
   }
 }
 
-function interactWithTheMap(theMap) {
-  let asideDOMEl = document.querySelector("aside");
-  let zurdo = false;
-
-  // asideDOMEl.innerHTML = `<p>Zurdo ${zurdo}</p><input type='range' min=1 max=15 id='zoom-level' placeholder='zoom level' /><button id="move-left">Move left</button><button id="move-right">Move right</button>`;
-  // asideDOMEl.style.left = 0;
-
-  document.querySelector("#move-left").onclick = function() {
-    theMap.panBy(500 * (zurdo ? -1 : 1), 0);
-  };
-
-  document.querySelector("#move-right").onclick = function() {
-    theMap.panBy(-500 * (zurdo ? -1 : 1), 0);
-  };
-
-  document.querySelector("#zoom-level").onchange = function() {
-    theMap.setZoom(+this.value);
-  };
-}
-
-function infoWindowDisplay(theMap) {
-  var contentString =
-    '<div id="content">' +
-    '<div id="siteNotice">' +
-    "</div>" +
-    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
-    '<div id="bodyContent">' +
-    "<img height='100' src='https://australianaviation.com.au/wp-content/uploads/2019/07/Uluru_from_the_air_1170.jpg'><p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
-    "sandstone rock formation in the southern part of the " +
-    "Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) " +
-    "south west of the nearest large town, Alice Springs; 450&#160;km " +
-    "(280&#160;mi) by road. Kata Tjuta and Uluru are the two major " +
-    "features of the Uluru - Kata Tjuta National Park. Uluru is " +
-    "sacred to the Pitjantjatjara and Yankunytjatjara, the " +
-    "Aboriginal people of the area. It has many springs, waterholes, " +
-    "rock caves and ancient paintings. Uluru is listed as a World " +
-    "Heritage Site.</p>" +
-    '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
-    "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
-    "(last visited June 22, 2009).</p>" +
-    "</div>" +
-    "</div>";
-
-  var infowindow = new google.maps.InfoWindow({
-    content: contentString
-  });
-
-  var marker = new google.maps.Marker({
-    position: uluru,
-    map: theMap,
-    title: "Uluru (Ayers Rock)"
-  });
-
-  marker.addListener("click", function() {
-    infowindow.open(map, marker);
-  });
-}
-
-function addMarkerWhereYouHaveClicked(theMap) {
-  theMap.addListener("click", function(e) {
-    markers.push(
-      new google.maps.Marker({
-        position: e.latLng,
-        // position: {
-        //   lat: e.latLng.lat(),
-        //   lng: e.latLng.lng()
-        // },
-        map: theMap,
-        draggable: true,
-        icon: "images/doge.png",
-        title: "Marker where you have clicked"
-      })
-    );
-
-    if (markers.length === 2) {
-      drawRoute(
-        theMap,
-        {
-          latitude: markers[0].position.lat(),
-          longitude: markers[0].position.lng()
-        },
-        {
-          latitude: markers[1].position.lat(),
-          longitude: markers[1].position.lng()
-        }
-      );
-    }
-  });
-}
-
-function markersWithEvents(theMap) {
-  function showBootcampData() {
-    const asideDOMEl = document.querySelector("aside");
-
-    asideDOMEl.innerHTML = `
-      <button id='close-button'>X</button>
-      <h1>Place</h1>
-      <p>${ironhackBCNData.name}</p>
-      <p>Students: ${ironhackBCNData.students}</p>
-      <p>Total bootcamps: ${ironhackBCNData.bootcamps}</p>
-    `;
-
-    asideDOMEl.style.left = 0;
-
-    document.querySelector("#close-button").onclick = function() {
-      document.querySelector("aside").style.left = "-30vw";
-    };
-  }
-
-  let marker = new google.maps.Marker({
-    position: {
-      lat: 41.3977381,
-      lng: 2.190471916
-    },
-    map: theMap,
-    title: "Marker with events"
-  });
-
-  marker.addListener("click", showBootcampData);
-}
-
-function displayMarkersRow(theMap) {
-  Array(360)
-    .fill()
-    .forEach((_, idx) => {
-      new google.maps.Marker({
-        position: {
-          lat: 41.3977381 + Math.cos((idx * 2 * Math.PI) / 180),
-          lng: 2.190471916 + idx / 20
-        },
-        map: theMap,
-        title: "Testing a line of markers, marker #" + idx,
-        draggable: true
-      });
-    });
-}
-
-function showAirports(theMap) {
-  axios.get("http://localhost:3000/airportsData").then(allAirports => {
-    allAirports.data.forEach(airport => {
-      setTimeout(() => {
-        new google.maps.Marker({
-          position: {
-            lat: airport.lat,
-            lng: airport.lng
-          },
-          map: theMap,
-          title: airport.name,
-          animation: google.maps.Animation.DROP,
-          draggable: true
-        });
-      }, randomFloat(0.25, 1.25) * 1000);
-    });
-  });
-}
-
-google.maps.event.addDomListener(window, "load", function() {
-  const ubicacion = new Location(() => {
-    const myLatLng = { lat: ubicacion.latitude, lng: ubicacion.longitude };
-
-    let texto =
-      "<h1> Nombre del lugar </h1>" +
-      "<p> Descripcion del lugar <p>" +
-      '<a href="https://www.google.com">Pagina web</a>';
-
-    const options = {
-      center: myLatLng,
-      zoom: 14
-    };
-
-    //     // let map = document.getElementById("map");
-
-    //     // const mapa = new google.maps.Map(map, options);
-
-    //     const marcador = new google.maps.marker({
-    //       position: myLatLng,
-    //       map: theMap,
-    //       title: "Mi primer marcador "
-    //     });
-
-    let informacion = new google.maps.InfoWindow({
-      content: texto
-    });
-    marcador.addListener("click", function() {
-      informacion.open(theMap, marcador);
-    });
-
-    let autocomplete = document.getElementById("autocomplete");
-
-    const search = new google.maps.places.Autocomplete(autocomplete);
-    search.bindTo("bounds", theMap);
-  });
-});
-
-startMap();
+initMap();
