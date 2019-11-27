@@ -2,14 +2,14 @@ function initMap() {
   var map = new google.maps.Map(document.getElementById("map"), {
     mapTypeControl: false,
     center: {
-      lat: 41.3977381,
-      lng: 2.190471916
+      lat: 40.4167,
+      lng: -3.70325
     },
-    zoom: 13
+    zoom: 10
   });
 
   new AutocompleteDirectionsHandler(map);
-  // locateMe(map);
+  locateMe(map);
   getEvents(map)
 }
 
@@ -151,7 +151,9 @@ function locateMe(map) {
   }
 }
 
+
 initMap();
+
 
 
 console.log("holis")
