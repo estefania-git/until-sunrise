@@ -1,12 +1,15 @@
 function initMap() {
   var map = new google.maps.Map(document.getElementById("map"), {
     mapTypeControl: false,
-    center: { lat: 41.3977381, lng: 2.190471916 },
-    zoom: 13
+    center: {
+      lat: 40.4167,
+      lng: -3.70325
+    },
+    zoom: 10
   });
 
   new AutocompleteDirectionsHandler(map);
-  // locateMe(map);
+  locateMe(map);
   getEvents(map)
 }
 
@@ -52,27 +55,27 @@ function AutocompleteDirectionsHandler(map) {
 
 // Sets a listener on a radio button to change the filter type on Places
 // Autocomplete.
-AutocompleteDirectionsHandler.prototype.setupClickListener = function(
+AutocompleteDirectionsHandler.prototype.setupClickListener = function (
   id,
   mode
 ) {
   var radioButton = document.getElementById(id);
   var me = this;
 
-  radioButton.addEventListener("click", function() {
+  radioButton.addEventListener("click", function () {
     me.travelMode = mode;
     me.route();
   });
 };
 
-AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(
+AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function (
   autocomplete,
   mode
 ) {
   var me = this;
   autocomplete.bindTo("bounds", this.map);
 
-  autocomplete.addListener("place_changed", function() {
+  autocomplete.addListener("place_changed", function () {
     var place = autocomplete.getPlace();
 
     if (!place.place_id) {
@@ -88,19 +91,22 @@ AutocompleteDirectionsHandler.prototype.setupPlaceChangedListener = function(
   });
 };
 
-AutocompleteDirectionsHandler.prototype.route = function() {
+AutocompleteDirectionsHandler.prototype.route = function () {
   if (!this.originPlaceId || !this.destinationPlaceId) {
     return;
   }
   var me = this;
 
-  this.directionsService.route(
-    {
-      origin: { placeId: this.originPlaceId },
-      destination: { placeId: this.destinationPlaceId },
+  this.directionsService.route({
+      origin: {
+        placeId: this.originPlaceId
+      },
+      destination: {
+        placeId: this.destinationPlaceId
+      },
       travelMode: this.travelMode
     },
-    function(response, status) {
+    function (response, status) {
       if (status === "OK") {
         me.directionsRenderer.setDirections(response);
       } else {
@@ -110,23 +116,96 @@ AutocompleteDirectionsHandler.prototype.route = function() {
   );
 };
 
+function locateMe(map) {
+  if (navigator.geolocation) {
+    // Get current position
+    // The permissions dialog will pop up
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        debugger;
+        // Create an object to match Google's Lat-Lng object format
+        const currentCoords = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+
+        new google.maps.Marker({
+          position: currentCoords,
+          map: map,
+          title: "I am here"
+        });
+
+        map.panTo(currentCoords);
+
+        // User granted permission
+        // Center the map in the position we got
+      },
+      function () {
+        // If something goes wrong
+        console.log("Error in the geolocation service.");
+      }
+    );
+  } else {
+    // Browser says: Nah! I do not support this.
+    console.log("Browser does not support geolocation.");
+  }
+}
+
+
+initMap();
+
+
+
+console.log("holis")
+
+function player() {
+
+  console.log("holis2")
+  var tag = document.createElement('script');
+  console.log(tag)
+
+  tag.src = "https://www.youtube.com/AIzaSyDjDRv5gGCPnJIHje3XIh4BClc6xdNMJ5U";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); /* */
+
+  var player;
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '640',
+      videoId: 'M7lc1UVf-VE',
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+}
+
+player()
+
+
+
+
+
+
 function getEvents(map) {
   axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&{latlong:40.416775, -3.703790}&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
-  .then(payload => {
+    .then(payload => {
 
-    payload.data._embedded.events.forEach( (event)=> {
-      let currentCoords = {
-        lat: +event._embedded.venues[0].location.latitude,
-        lng: +event._embedded.venues[0].location.longitude
-      };
-      new google.maps.Marker({
-        position: currentCoords,
-        map: map
-        // icon:'http://google-maps-icons.googlecode.com/files/sailboat-tourism.png',
-      })  
-    });
+      payload.data._embedded.events.forEach((event) => {
+        let currentCoords = {
+          lat: +event._embedded.venues[0].location.latitude,
+          lng: +event._embedded.venues[0].location.longitude
+        };
+        new google.maps.Marker({
+          position: currentCoords,
+          map: map
+          // icon:'http://google-maps-icons.googlecode.com/files/sailboat-tourism.png',
+        })
+      });
 
     });
 }
-
-// getEvents();
