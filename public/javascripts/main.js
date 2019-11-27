@@ -9,7 +9,8 @@ function initMap() {
   });
 
   new AutocompleteDirectionsHandler(map);
-  locateMe(map);
+  // locateMe(map);
+  getEvents(map)
 }
 
 /**
@@ -115,6 +116,7 @@ AutocompleteDirectionsHandler.prototype.route = function () {
   );
 };
 
+<<<<<<< HEAD
 function locateMe(map) {
   if (navigator.geolocation) {
     // Get current position
@@ -183,3 +185,90 @@ function player() {
 
 
 player()
+=======
+// function locateMe(map) {
+//   if (navigator.geolocation) {
+//     console.log("hola");
+//     axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&{latlong:40.416775, -3.703790}&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+//     .then(payload => {
+//       console.log("hola2");
+//       console.log(payload.data._embeded.events[0]._embeded);
+  
+//       const currentCoords = {
+//         lat: payload.data._embeded.events[0]._embeded.venues[0].location.latitude,
+//         lng: payload.data._embeded.events[0]._embeded.venues[0].location.longitude
+//       };
+//           new google.maps.Marker({
+//             position: currentCoords,
+//             map: map,
+//             title: "I am here",
+//             marker: marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png')
+//           })  
+//       });
+//   } else {
+//     console.log("Browser does not support geolocation.");
+//   }
+// }
+
+initMap();
+
+// function getEvents() {
+//   console.log("hola");
+//   axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&{latlong:40.416775, -3.703790}&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+//   .then(payload => {
+//     console.log("hola2");
+//     console.log(payload.data);
+//     let numberOfEvents = payload.page.totalElements;
+//     let showsNear = [];
+
+//     for(var i=0; i < payload.page.size; i++) {
+//       let event = {
+//         name: payload._embedded.events[i].name,
+//         latitude: payload._embedded.venues[0].location.latitude,
+//         longitude: payload._embedded.venues[0].location.longitude
+//       }
+//       showsNear.push(event);
+//     }
+
+//     navigator.geolocation.getCurrentPosition(function(position){
+//       var map = new google.maps.Map(mapDiv, {
+//         center: {lat: position.coords.latitude, lng: position.coords.longitude},
+//         zoom: 10
+//       });
+
+//       showsNear.forEach(eventNear => {
+//         var marker = new google.maps.Marker({
+//           position: new google.maps.LatLng(eventNear.latitude, eventNear.longitude),
+//           map: map
+//         });
+//         marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');  
+//       });
+    
+//     });
+
+//   })
+// }
+
+// getEvents();
+
+function getEvents(map) {
+  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&{latlong:40.416775, -3.703790}&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+  .then(payload => {
+
+    payload.data._embedded.events.forEach( (event)=> {
+      let currentCoords = {
+        lat: +event._embedded.venues[0].location.latitude,
+        lng: +event._embedded.venues[0].location.longitude
+      };
+      new google.maps.Marker({
+        position: currentCoords,
+        map: map
+        // icon:'http://google-maps-icons.googlecode.com/files/sailboat-tourism.png',
+      })  
+    });
+
+    });
+}
+
+// getEvents();
+>>>>>>> ca3ebf2838a7b91c2249de2dfa67787d21a658a8
