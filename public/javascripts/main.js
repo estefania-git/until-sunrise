@@ -156,11 +156,9 @@ initMap();
 
 
 
-console.log("holis")
+
 
 function player() {
-
-  console.log("holis2")
   var tag = document.createElement('script');
   console.log(tag)
 
@@ -175,6 +173,7 @@ function player() {
       height: '390',
       width: '640',
       videoId: 'M7lc1UVf-VE',
+      //aqui va playVars playerVars: { 'autoplay': 0, 'controls': 1, 'playlist':['your_video_id', '...']},
       events: {
         'onReady': onPlayerReady,
         'onStateChange': onPlayerStateChange
@@ -192,9 +191,9 @@ player()
 
 
 function getEvents(map) {
-  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&{latlong:40.416775, -3.703790}&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
     .then(payload => {
-
+      // console.log(payload.data)
       payload.data._embedded.events.forEach((event) => {
         let currentCoords = {
           lat: +event._embedded.venues[0].location.latitude,
@@ -202,10 +201,41 @@ function getEvents(map) {
         };
         new google.maps.Marker({
           position: currentCoords,
-          map: map
-          // icon:'http://google-maps-icons.googlecode.com/files/sailboat-tourism.png',
+          map: map,
+          // icon:'https://image.flaticon.com/icons/png/512/122/122320.png',
         })
       });
 
+    });
+
+  getList();
+
+}
+
+function getList() {
+  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+    .then(payload => {
+      var artists = []
+
+      console.log(payload.data._embedded.events[0].name)
+
+
+      payload.data._embedded.events.forEach((event) => {
+        let artistName = event.name;
+        artists.push(artistName);
+      });
+
+      function printList() {
+        let ul = document.createElement('ul');
+        document.getElementById('artistList').appendChild(ul);
+
+        artists.forEach((artist) => {
+        let li = document.createElement('li');
+        ul.appendChild(li);
+      
+        li.innerHTML += artist;
+        })
+      }
+      printList();
     });
 }
