@@ -1,12 +1,10 @@
 function player() {
-  var tag = document.createElement("script");
+  let tag = document.createElement("script");
   console.log(tag);
 
-  tag.src = "https://www.youtube.com/AIzaSyDjDRv5gGCPnJIHje3XIh4BClc6xdNMJ5U";
-  var firstScriptTag = document.getElementsByTagName("script")[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); /* */
-
-  var player;
+  tag.src = "https://www.youtube.com/AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY";
+  let firstScriptTag = document.getElementsByTagName("script")[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   function onYouTubeIframeAPIReady() {
     player = new YT.Player("player", {
@@ -21,15 +19,27 @@ function player() {
   }
 }
 
-function searchByKeyword() {
-  let results = YouTube.Search.list("id,snippet", {
-    q: "",
-    maxResults: 25
-  });
-  for (let i in results.items) {
-    let item = results.items[i];
-    Logger.log("[%s] Title: %s", item.id.videoId, item.snippet.title);
-  }
+function getArtistName() {
+  axios
+    .get(
+      "https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV"
+    )
+    .then(payload => {
+      payload.data._embedded.events.forEach(eventDetail => {
+        let ul = document.createElement("ul"); // lo que vas a hacer
+
+      });
+    })
+    .catch(err => console.log(err));
 }
 
-player();
+getArtistName();
+
+// console.log(payload.data._embedded.events[0])
+// console.log(payload.data._embedded.events[0].name)
+// console.log(payload.data._embedded.events[0].id)
+// console.log(payload.data._embedded.events[0].dates.start.localDate)
+// console.log(payload.data._embedded.events[0].dates.start.localTime)
+// console.log(payload.data._embedded.events[0].url)
+// console.log(payload.data._embedded.events[0].images[0].url)
+// console.log(payload.data._embedded.events[0]._embedded.venues[0].name)

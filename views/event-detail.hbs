@@ -1,0 +1,22 @@
+<h2>{{eventDetail.name}}</h2>
+<h3>{{eventDetail.id}}</h3>
+<h3>{{eventDetail.dates.start.localDate}}</h3>
+<h3>{{eventDetail.dates.start.localTime}}</h3>
+<h3>{{eventDetail.url}}</h3>
+<h3>{{eventDetail.images.0.url}}</h3>
+<h3>{{eventDetail_embedded.venues.0.name}}</h3>
+
+
+<form name="" action="/create-event" method="GET">
+  <input type="text" name="name" value="{{eventDetail.name}}">
+  <input type="text" name="id" value="{{eventDetail.id}}">
+  <input type="text" name="localTime" value="{{eventDetail.dates.start.localTime}}">
+  <input type="text" name="localDate" value="{{eventDetail.dates.start.localDate}}">
+  <input type="text" name="url" value="{{eventDetail.url}}">
+  <input type="text" name="image" value="{{eventDetail.images.0.url}}">
+  <input type="text" name="venues_name" value="{{eventDetail._embedded.venues.0.name}}">
+  <input type="submit" value="Submit">
+</form>
+
+
+{{!-- // --}}
