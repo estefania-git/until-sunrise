@@ -36,10 +36,3 @@ function getArtistName() {
 getArtistName();
 
 // console.log(payload.data._embedded.events[0])
-// console.log(payload.data._embedded.events[0].name)
-// console.log(payload.data._embedded.events[0].id)
-// console.log(payload.data._embedded.events[0].dates.start.localDate)
-// console.log(payload.data._embedded.events[0].dates.start.localTime)
-// console.log(payload.data._embedded.events[0].url)
-// console.log(payload.data._embedded.events[0].images[0].url)
-// console.log(payload.data._embedded.events[0]._embedded.venues[0].name)

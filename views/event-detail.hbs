@@ -1,7 +1,7 @@
 <h2>{{eventDetail.name}}</h2>
 <input type="hidden" value="{{eventDetail.id}}">
-<h3>{{eventDetail.dates.start.localDate}}</h3>
-<h3>{{eventDetail.dates.start.localTime}}</h3>
+<h3> <b>Fecha</b> : {{eventDetail.dates.start.localDate}}</h3>
+<h3> <b>Hora</b> : {{eventDetail.dates.start.localTime}}</h3>
 <a href="{{eventDetail.url}}">Compra tus entradas !!</a>
 <img src="{{eventDetail.images.0.url}}" alt="">
 <h3>{{eventDetail_embedded.venues.0.name}}</h3>
@@ -15,6 +15,5 @@
   <input type="hidden" name="url" value="{{eventDetail.url}}">
   <input type="hidden" name="image" value="{{eventDetail.images.0.url}}">
   <input type="hidden" name="venues_name" value="{{eventDetail._embedded.venues.0.name}}">
-  {{!-- <input type="submit" value="Submit"> --}}
   <button type="submit" value="submit">❤</button>
 </form>
