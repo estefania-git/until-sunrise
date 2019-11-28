@@ -1,10 +1,12 @@
-<h2>Favourites</h2>
+<h1>Favourites</h1>
 {{#each foundUser.favourites}}
-<p>{{name}}</p>
-<p>{{id}}</p>
-<p>{{localDate}}</p>
-<p>{{localTime}}</p>
-<p>{{url}}</p>
-<p>{{image}}</p>
-<p>{{venues_name}}</p>
+<h2>{{name}}</h2>
+<input type="hidden" value="{{id}}">
+<p> <b>Fecha</b> : {{localDate}}</p>
+<p> <b>Hora</b> : {{localTime}}</p>
+<a href="{{url}}"> Compra tus entradas !! </a>
+<img src="{{image}}" alt="" id="img-favourites">
+<p> <b>Lugar</b> : {{venues_name}}</p>
+<br>
+<br>
 {{/each}}
