@@ -62,7 +62,7 @@ router.post("/create-event", (req, res) => {
             favourites: createdEvent._id
           }
         })
-        .then(() => res.redirect("/"))
+        .then(() => res.redirect("/main"))
     })
     .catch(err => console.log(err))
 })
