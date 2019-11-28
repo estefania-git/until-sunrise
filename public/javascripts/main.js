@@ -168,9 +168,9 @@ function getEvents(map) {
 }
 
 function getList() {
-  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
     .then(payload => {
-
+      console.log(payload.data._embedded.events.name)
       payload.data._embedded.events.forEach((event) => {
         let ul = document.createElement('ul');
         document.getElementById('artistList').appendChild(ul);

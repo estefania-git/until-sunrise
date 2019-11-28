@@ -1,29 +1,25 @@
-<h1>{{name}}</h1>
 
 
 
-<a href="/profile">profile</a>
-<!-- map.html -->
+<h2>Welcome back to Until Sunrise {{name}}!</h2>
+
+<a href="/EVENT">Event</a> 
+<!-- this link is bad -->
 
 <!DOCTYPE html>
 <html>
 
 <head>
-  <title>My First Map</title>
   <style>
-    /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
     #map {
       width: 50%;
       height: 75%;
     }
 
-    /* Optional: Makes the sample page fill the window. */
     html,
     body {
       height: 100%;
-      margin: 0;
-      padding: 0;
+
     }
 
     .controls {
@@ -43,7 +39,6 @@
       font-family: Roboto;
       font-size: 15px;
       font-weight: 300;
-      margin-left: 12px;
       padding: 0 11px 0 13px;
       text-overflow: ellipsis;
       width: 200px;
@@ -79,7 +74,8 @@
 </head>
 
 <body>
-  <h3>My First Map</h3>
+  <h3>Looking for something new??</h3>
+
   <div style="display: none">
     <input id="origin-input" class="controls" type="text" placeholder="Enter an origin location">
 
@@ -100,24 +96,33 @@
 
   <div id="map"></div>
 
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY&libraries=places"></script>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 
 
 
-
+<div class = "facebookButton">
   <iframe
     src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=large&width=151&height=28&appId"
     width="151" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"
     allow="encrypted-media"></iframe>
+</div>
+
+
+<div class = "event-list">
+  <button id ="link-page">See the events near you</button>
+  <h2>All the events</h2>
+  <div id = "artistList"></div>
+</div>
+
 
   <div>
     <h2>Concerts Near You</h2>
     <div id="artistList"></div>
   </div>
   <button id="link-page">See the Concerts Near You</button>
+
   <script type="text/javascript" src="/javascripts/main.js"></script>
 
   {{!-- <button id="button-like">❤</button> <button id="link-page"></button> Buy your Tickets here !!</button> --}}
@@ -125,4 +130,3 @@
 </body>
 
 </html>
-<a href=""></a>
