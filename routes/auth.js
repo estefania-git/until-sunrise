@@ -74,7 +74,6 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/");
 
 router.get("/", (req, res, next) => {
   res.render("map");

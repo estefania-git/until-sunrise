@@ -1,3 +1,1 @@
-router.get('/', (req, res, next) => {
-  res.render('profile');
-});
+// rutas para editar 
