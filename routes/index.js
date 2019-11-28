@@ -44,9 +44,9 @@ router.get("/details/:id", (req, res) => {
     )
     .catch(err => console.log(err));
 });
-router.get("/create-event", (req, res) => {
-
-  let event = {
+router.post("/create-event", (req, res) => {
+  console.log(req.body.name)
+  let newEvent = {
     name: req.body.name,
     id: req.body.id,
     localDate: req.body.localDate,
@@ -55,8 +55,27 @@ router.get("/create-event", (req, res) => {
     image: req.body.image,
     venues_name: req.body.venues_name
   }
-  Event.create(event)
-    .then(createdEvent => console.log(createdEvent))
+  Event.create(newEvent)
+    .then(createdEvent => {
+      User.findByIdAndUpdate(req.user._id, {
+          $push: {
+            favourites: createdEvent._id
+          }
+        })
+        .then(() => res.redirect("/"))
+    })
+    .catch(err => console.log(err))
+})
+
+router.get("/myfavourites", (req, res) => {
+  User.findById(req.user._id)
+    .populate("favourites")
+    .then(foundUser => {
+      res.render("my-favourites", {
+        foundUser
+      })
+
+    })
     .catch(err => console.log(err))
 })
 
