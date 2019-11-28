@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
+
 const Schema   = mongoose.Schema;
 
 const evenSchema = new Schema({
+
+const Schema = mongoose.Schema;
+const eventSchema = new Schema({
+
   name: String,
   id: String,
   localDate: String,
@@ -16,8 +21,13 @@ const evenSchema = new Schema({
   }
 });
 
+
 const Event = mongoose.model('Event', userSchema);
 module.exports = Event;
 
 
+
+
+const Event = mongoose.model('Event', eventSchema);
+module.exports = Event;
 

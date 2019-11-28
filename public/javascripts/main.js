@@ -176,12 +176,13 @@ function getList() {
         document.getElementById('artistList').appendChild(ul);
         let li = document.createElement('li');
         ul.appendChild(li);
-        li.innerHTML += event.name + " " +  `<a href=${event.url}>Get Tickets</a>`;
+        li.innerHTML += event.name + " " + `<a href=${event.url}>Get Tickets</a>` + " " + `<a href=/details/${event.id}>Details</a>`;
 
       });
 
     });
 }
+
 
 document.getElementById("link-page").onclick = getList();
 

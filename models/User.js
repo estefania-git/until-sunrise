@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
   googleID: String,
@@ -11,7 +11,11 @@ const userSchema = new Schema({
   family_name: String,
   locale: String,
   access_token: String,
-  refresh_token: String
+  refresh_token: String,
+  favourites: [{
+    type: Schema.Types.ObjectId,
+    ref: "Event"
+  }]
 }, {
   timestamps: {
     createdAt: 'created_at',
