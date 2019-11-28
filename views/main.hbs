@@ -1,5 +1,8 @@
 <h1>{{name}}</h1>
 
+
+
+<a href="/profile">profile</a>
 <!-- map.html -->
 
 <!DOCTYPE html>
@@ -63,6 +66,15 @@
       font-size: 13px;
       font-weight: 300;
     }
+
+    #button-like {
+      border-radius: 1px solid;
+
+    }
+
+    #link-page {
+      border-radius: 1px solid;
+    }
   </style>
 </head>
 
@@ -84,6 +96,8 @@
       <label for="changemode-driving">Driving</label>
     </div>
   </div>
+
+
   <div id="map"></div>
 
   <script
@@ -91,16 +105,13 @@
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 
-  <script type="text/javascript" src="https://www.youtube.com/AIzaSyDjDRv5gGCPnJIHje3XIh4BClc6xdNMJ5U"></script>
+  <script type="text/javascript" src="https://www.youtube.com/AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY"></script>
 
 
-  <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-  <div id="player"></div>
-
-  <iframe id="ytplayer" type="text/html" width="640" height="360"
-    src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com" frameborder="0"></iframe>
-
-  <div id="ytplayer"></div>
+  <iframe
+    src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=large&width=151&height=28&appId"
+    width="151" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"
+    allow="encrypted-media"></iframe>
 
 <div>
   <h2>Concerts Near You</h2>
@@ -108,6 +119,9 @@
 </div>
   <button id ="link-page">See the Concerts Near You</button>
   <script type="text/javascript" src="/javascripts/main.js"></script>
+
+  {{!-- <button id="button-like">❤</button> <button id="link-page"></button> Buy your Tickets here !!</button> --}}
+
 </body>
 
 </html>

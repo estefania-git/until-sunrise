@@ -147,45 +147,6 @@ function locateMe(map) {
   }
 }
 
-
-initMap();
-
-
-
-
-
-function player() {
-  var tag = document.createElement('script');
-  console.log(tag)
-
-  tag.src = "https://www.youtube.com/AIzaSyDjDRv5gGCPnJIHje3XIh4BClc6xdNMJ5U";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); /* */
-
-  var player;
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '390',
-      width: '640',
-      videoId: 'M7lc1UVf-VE',
-      //aqui va playVars playerVars: { 'autoplay': 0, 'controls': 1, 'playlist':['your_video_id', '...']},
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-}
-
-player()
-
-
-
-
-
-
 function getEvents(map) {
   axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
     .then(payload => {
@@ -223,3 +184,6 @@ function getList() {
 }
 
 document.getElementById("link-page").onclick = getList();
+
+
+initMap();

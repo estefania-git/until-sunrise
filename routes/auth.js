@@ -7,16 +7,15 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // ${process.env.HURL}
 
 passport.use(
-  new GoogleStrategy(
-    {
+  new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
       callbackURL: `/auth/google/callback`
     },
     (accessToken, refreshToken, profile, done) => {
       User.findOne({
-        googleID: profile.id
-      })
+          googleID: profile.id
+        })
         .then(user => {
           if (user) {
             done(null, user);
@@ -75,10 +74,16 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/");
 
 router.get("/", (req, res, next) => {
   res.render("map");
+
+
+});
+router.get("/profile", (req, res, next) => {
+  res.render("profile");
+
+
 });
 
 module.exports = router;
