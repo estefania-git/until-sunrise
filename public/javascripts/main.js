@@ -118,12 +118,8 @@ AutocompleteDirectionsHandler.prototype.route = function () {
 
 function locateMe(map) {
   if (navigator.geolocation) {
-    // Get current position
-    // The permissions dialog will pop up
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        debugger;
-        // Create an object to match Google's Lat-Lng object format
         const currentCoords = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
@@ -208,34 +204,22 @@ function getEvents(map) {
 
     });
 
-  getList();
-
 }
 
 function getList() {
   axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
     .then(payload => {
-      var artists = []
-
-      console.log(payload.data._embedded.events[0].name)
-
 
       payload.data._embedded.events.forEach((event) => {
-        let artistName = event.name;
-        artists.push(artistName);
-      });
-
-      function printList() {
         let ul = document.createElement('ul');
         document.getElementById('artistList').appendChild(ul);
-
-        artists.forEach((artist) => {
         let li = document.createElement('li');
         ul.appendChild(li);
-      
-        li.innerHTML += artist;
-        })
-      }
-      printList();
+        li.innerHTML += event.name + " " +  `<a href=${event.url}>Get Tickets</a>`;
+
+      });
+
     });
 }
+
+document.getElementById("link-page").onclick = getList();
