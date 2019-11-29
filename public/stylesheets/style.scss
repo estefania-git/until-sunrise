@@ -1,4 +1,53 @@
-// colors #322b5b, #3e4894, #662e68, #b0b8db, #4e5572 
+// final version colors #322b5b, #3e4894, #662e68, #b0b8db, #4e5572 
+
+//google button
+
+.loginBtn {
+  box-sizing: border-box;
+  position: relative;
+  /* width: 13em;  - apply for fixed size */
+  margin: 0.2em;
+  padding: 10px 10px 10px 50px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+}
+.loginBtn:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+.loginBtn:focus {
+  outline: none;
+}
+.loginBtn:active {
+  box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+
+
+/* Google */
+.loginBtn--google {
+  /*font-family: "Roboto", Roboto, arial, sans-serif;*/
+  background: #DD4B39;
+}
+.loginBtn--google:before {
+  border-right: #BB3F30 1px solid;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;
+}
+.loginBtn--google:hover,
+.loginBtn--google:focus {
+  background: #E74B37;
+}
+
+// google button
 
 body {
   padding: 50px;
@@ -46,3 +95,138 @@ h2{
     padding: 8px 16px;
   }
   }
+
+/// barra de layout
+.bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+  background-color: #2a2546;
+  opacity: 90%;
+
+  a {
+    color: white;
+    padding: 8px 16px;
+  }
+}
+/////
+
+/// ul y li
+.artistList ul{
+  list-style: none;
+  max-width: 40vw;
+  background-color: brown;
+}
+
+li {
+  list-style-type: none;
+  display: inline-block;
+  align-content: center;
+}
+
+li a{
+  color: #6572d4;
+  text-shadow: 2px 2px 4px #4e5ab6;
+  margin-left: 20px;
+  border: #6572d4;
+  border-width: 2px;
+}
+/////// ul y li
+
+///// fav setup
+
+#fav-artist{
+  text-shadow: 2px 2px 8px #4e5ab6;
+}
+
+#fav-tick{
+  text-shadow: 2px 2px 8px #4e5ab6;
+  text-decoration-line: underline;
+  text-underline-position: below;
+}
+
+#fav-img{
+  text-shadow: 2px 2px 8px #4e5ab6;
+  width: 50vw;
+  height: 50%;
+  padding-left: 20vw;
+}
+
+///// fav setup
+
+
+///// det setup
+
+#det-artist{
+  text-shadow: 2px 2px 8px #4e5ab6;
+}
+
+#det-tick{
+  text-shadow: 2px 2px 8px #4e5ab6;
+  text-decoration-line: underline;
+  text-underline-position: below;
+}
+
+#det-img{
+  text-shadow: 2px 2px 8px #4e5ab6;
+  width: 50vw;
+  height: 50%;
+  padding-left: 20vw;
+}
+
+///// det setup
+
+
+//// botón de like
+#heart{
+  color: fuchsia;
+  background-color: #322b5b;
+  font-size: 60px;
+  margin-left: 50px;
+  border: none;
+}
+
+/////// boton de like
+
+////login
+
+#foto{
+  width: 85vw;
+  height:85%;
+  opacity: 70%;
+}
+
+#login-father{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#inside{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+///////main
+
+#link-page{
+  background-color: #322b5b;
+  font-size: 40px;
+  margin-left: 50px;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  padding-top: 50px;
+  margin-left: -12px;
+}
+
+#saludo{
+  font-size: 40px;
+}
