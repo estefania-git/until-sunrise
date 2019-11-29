@@ -48,7 +48,8 @@ body {
   margin: 5px;
   margin-left: 30px;
   margin-right: 30px;
-  background-image: url("/images/fondossss.jpg"); }
+  background-image: url("/images/fondossss.jpg");
+  background-size: 100vw; }
 
 a {
   color: inherit;
@@ -74,12 +75,16 @@ h2 {
   font-family: 'Montserrat', sans-serif;
   color: white; }
 
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  text-shadow: 4px 4px 8px #4e5ab6; }
+
 .bar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  align: center;
   color: #000;
   padding: 8px 16px;
   text-decoration: none; }
@@ -117,26 +122,34 @@ artistList ul {
   opacity: 90%;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  padding-left: 20px; }
 
 #details {
   background-color: #322b5b;
   opacity: 90%;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin-top: 10px; }
+  margin-top: 10px;
+  padding-left: 20px; }
 
 li {
   list-style-type: none;
   display: inline-block;
-  align-content: center; }
+  align-content: center;
+  font-size: 20px; }
 
 li a {
-  color: #6572d4;
-  text-shadow: 2px 2px 4px #4e5ab6;
+  color: #d2d7ff;
+  text-shadow: 2px 2px 4px #9aa2dd;
   margin-left: 20px;
   border: #6572d4;
-  border-width: 2px; }
+  border-width: 2px;
+  font-size: 15px; }
+
+.facebookButton {
+  padding-top: 25px;
+  padding-bottom: 25px; }
 
 #fav-artist {
   text-shadow: 2px 2px 8px #4e5ab6; }
