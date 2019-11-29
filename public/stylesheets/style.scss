@@ -1,7 +1,5 @@
 // final version colors #322b5b, #3e4894, #662e68, #b0b8db, #4e5572 
-
 //google button
-
 .loginBtn {
   box-sizing: border-box;
   position: relative;
@@ -35,7 +33,6 @@
   box-shadow: inset 0 0 0 32px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Google */
 .loginBtn--google {
   /*font-family: "Roboto", Roboto, arial, sans-serif;*/
@@ -53,7 +50,6 @@
 }
 
 // google button
-
 body {
   padding: 50px;
   font-family: 'Montserrat', sans-serif;
@@ -65,63 +61,6 @@ body {
   background-image: url("/images/fondossss.jpg");
 }
 
-#map {
-  width: 50%;
-  height: 75%;
-
-}
-
-.controls {
-  margin-top: 10px;
-  border: 1px solid transparent;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  height: 32px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-#origin-input,
-#destination-input {
-  background-color: #fff;
-  font-family: Roboto;
-  font-size: 15px;
-  font-weight: 300;
-  padding: 0 11px 0 13px;
-  text-overflow: ellipsis;
-  width: 200px;
-}
-
-#origin-input:focus,
-#destination-input:focus {
-  border-color: #4d90fe;
-}
-
-#mode-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  margin-left: 12px;
-  padding: 5px 11px 0px 11px;
-}
-
-#mode-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
-}
-
-
-
-#button-like {
-  border-radius: 1px solid;
-
-}
-
-#link-page {
-  border-radius: 1px solid;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -129,7 +68,6 @@ a {
   :hover {
     color: #b0b8db;
   }
-
 }
 
 h1 {
@@ -151,6 +89,12 @@ h1 {
 h2 {
   font-family: 'Montserrat', sans-serif;
   color: white;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  text-shadow: 4px 4px 8px #4e5ab6;
 }
 
 .bar {
@@ -188,12 +132,10 @@ h2 {
 }
 
 /////
-
 /// ul y li
 artistList ul {
   list-style: none;
   max-width: 40vw;
-
 }
 
 #artistList {
@@ -219,26 +161,29 @@ artistList ul {
   margin-top: 10px;
 }
 
-
 li {
   list-style-type: none;
   display: inline-block;
   align-content: center;
+  font-size: 20px;
 }
 
 li a {
-  color: #6572d4;
-  text-shadow: 2px 2px 4px #4e5ab6;
+  color: #d2d7ff;
+  text-shadow: 2px 2px 4px #9aa2dd;
   margin-left: 20px;
   border: #6572d4;
   border-width: 2px;
+  font-size: 15px;
+}
 
+.facebookButton {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 /////// ul y li
-
 ///// fav setup
-
 #fav-artist {
   text-shadow: 2px 2px 8px #4e5ab6;
 }
@@ -257,10 +202,7 @@ li a {
 }
 
 ///// fav setup
-
-
 ///// det setup
-
 #det-artist {
   text-shadow: 2px 2px 8px #4e5ab6;
 }
@@ -279,8 +221,6 @@ li a {
 }
 
 ///// det setup
-
-
 //// botón de like
 #heart {
   color: fuchsia;
@@ -291,9 +231,7 @@ li a {
 }
 
 /////// boton de like
-
 ////login
-
 #foto {
   width: 85vw;
   height: 85%;
@@ -314,7 +252,6 @@ li a {
 }
 
 ///////main
-
 #link-page {
   background-color: #322b5b;
   font-size: 40px;
