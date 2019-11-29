@@ -1,13 +1,74 @@
-<h2>Welcome back to Until Sunrise {{name}}!</h2>
-
-<a href="/EVENT">Event</a>
-
-
 <!DOCTYPE html>
 <html>
 
 <head>
+  <h2 id="saludo">Welcome back to Until Sunrise {{name}}!</h2>
 
+  <style>
+    #map {
+      width: 50%;
+      height: 75%;
+    }
+
+    html,
+    body {
+      height: 100%;
+
+    }
+
+    .controls {
+      margin-top: 10px;
+      border: 1px solid transparent;
+      border-radius: 2px 0 0 2px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      height: 32px;
+      outline: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    }
+
+    #origin-input,
+    #destination-input {
+      background-color: #fff;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 0 11px 0 13px;
+      text-overflow: ellipsis;
+      width: 200px;
+      opacity: 0;
+    }
+
+    #origin-input:focus,
+    #destination-input:focus {
+      border-color: #4d90fe;
+    }
+
+    #mode-selector {
+      color: #fff;
+      background-color: #4d90fe;
+      margin-left: 12px;
+      padding: 5px 11px 0px 11px;
+      opacity: 0;
+    }
+
+    #mode-selector label {
+      font-family: Roboto;
+      font-size: 13px;
+      font-weight: 300;
+      opacity: 0;
+    }
+
+    #button-like {
+      border-radius: 1px solid;
+
+    }
+
+    #link-page {
+      border-radius: 1px solid;
+    }
+  </style>
 </head>
 
 <body>
@@ -33,11 +94,19 @@
 
   <div id="map"></div>
 
+
+
+
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY&libraries=places"></script>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
 
+
+  <div class="event-list">
+    <button id="link-page">See the events near you</button>
+    <div id="artistList"></div>
+  </div>
 
 
   <div class="facebookButton">
@@ -46,21 +115,6 @@
       width="151" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
       allowTransparency="true" allow="encrypted-media"></iframe>
   </div>
-
-
-  <div class="event-list">
-    <button id="link-page">See the events near you</button>
-    <h2>All the events</h2>
-    <div id="artistList"></div>
-  </div>
-
-
-  <div>
-    <h2>Concerts Near You</h2>
-    <div id="artistList"></div>
-  </div>
-  <button id="link-page">See the Concerts Near You</button>
-
   <script type="text/javascript" src="/javascripts/main.js"></script>
 
 
