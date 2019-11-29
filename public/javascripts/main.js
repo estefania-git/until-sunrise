@@ -151,7 +151,9 @@ function getEvents(map) {
   axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
     .then(payload => {
       // console.log(payload.data)
-      payload.data._embedded.events.forEach((event) => {
+      payload = payload.data
+
+      payload._embedded.events.forEach((event) => {
         let currentCoords = {
           lat: +event._embedded.venues[0].location.latitude,
           lng: +event._embedded.venues[0].location.longitude
@@ -163,15 +165,7 @@ function getEvents(map) {
         })
       });
 
-    });
-
-}
-
-function getList() {
-  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
-    .then(payload => {
-      console.log(payload.data._embedded.events.name)
-      payload.data._embedded.events.forEach((event) => {
+      payload._embedded.events.forEach((event) => {
         let ul = document.createElement('ul');
         document.getElementById('artistList').appendChild(ul);
         let li = document.createElement('li');
@@ -180,11 +174,11 @@ function getList() {
 
       });
 
+
+      document.getElementById("preloader").style.display = "none"
+
     });
+
 }
-
-
-document.getElementById("link-page").onclick = getList();
-
 
 initMap();

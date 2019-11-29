@@ -1,5 +1,6 @@
 <h1>Favourites</h1>
 {{#each foundUser.favourites}}
+<div id="fav">
 <h2 id = "fav-artist">{{name}}</h2>
 <a id = "fav-tick" href="{{url}}"> Compra tus entradas !! </a>
 <input type="hidden" value="{{id}}">
@@ -9,4 +10,5 @@
 <img id = "fav-img" src="{{image}}" alt="">
 <br>
 <br>
+</div>
 {{/each}}
