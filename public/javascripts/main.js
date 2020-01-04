@@ -148,7 +148,7 @@ function locateMe(map) {
 }
 
 function getEvents(map) {
-  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV')
+  axios.get('https://app.ticketmaster.com/discovery/v2/events.json?city=madrid&&sort=date,asc&apikey=${process.env.TICKETMASTER_API_KEY}')
     .then(payload => {
       // console.log(payload.data)
       payload = payload.data
