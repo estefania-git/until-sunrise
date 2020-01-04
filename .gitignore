@@ -1,3 +1,5 @@
+.vscode
+
 # Dependency directory
 node_modules
 
@@ -6,3 +8,5 @@ npm-debug.log
 
 # Environment Variables should NEVER be published
 .env
+
+credentials.json

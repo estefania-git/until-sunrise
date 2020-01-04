@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const router = express.Router();
 const ensureLogin = require("connect-ensure-login");
@@ -22,7 +24,7 @@ router.get("/profile", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 router.get("/prueba/:name", ensureLogin.ensureLoggedIn(), (req, res, next) => {
   let opts = {
     maxResults: 10,
-    key: "AIzaSyAuKj9DeZEZw9hrK1Z52vCu0YZ2ULGyTSY"
+    key: `${process.env.GOOGLEMAPS_API_KEY}`
   };
 
   search(req.params.name, opts, function (err, results) {
@@ -35,7 +37,7 @@ router.get("/prueba/:name", ensureLogin.ensureLoggedIn(), (req, res, next) => {
 router.get("/details/:id", (req, res) => {
   axios
     .get(
-      `https://app.ticketmaster.com/discovery/v2/events.json?id=${req.params.id}&apikey=4PkIm4wGJG9ZWAv3XAqPzsWngGoE0GHV`
+      `https://app.ticketmaster.com/discovery/v2/events.json?id=${req.params.id}&apikey=${process.env.TICKETMASTER_API_KEY}`
     )
     .then(event =>
       res.render("event-detail", {
